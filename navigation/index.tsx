@@ -18,6 +18,19 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import Scores from "../screens/Scores";
+const Drawer = createDrawerNavigator();
+
+export function MyDrawer() {
+    return (
+        <Drawer.Navigator useLegacyImplementation>
+            <Drawer.Screen name="Feed" component={TabOneScreen} />
+            <Drawer.Screen name="Article" component={Scores} />
+        </Drawer.Navigator>
+    );
+}
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -41,7 +54,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="Settings" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -66,16 +79,16 @@ function BottomTabNavigator() {
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Counter',
+          tabBarIcon: ({ color }) => <TabBarIcon name="repeat" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Modal')}
+              onPress={() => navigation.navigate('Settings')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
               <FontAwesome
-                name="info-circle"
+                name="gears"
                 size={25}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
@@ -87,21 +100,37 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
+        options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
+          title: 'PBS',
+          tabBarIcon: ({ color }) => <TabBarIcon name="group" color={color} />,
+            headerRight: () => (
+                <Pressable
+                    onPress={() => navigation.navigate('Setup')}
+                    style={({ pressed }) => ({
+                        opacity: pressed ? 0.5 : 1,
+                    })}>
+                    <FontAwesome
+                        name="gears"
+                        size={25}
+                        color={Colors[colorScheme].text}
+                        style={{ marginRight: 15 }}
+                    />
+                </Pressable>
+            ),
+            // headerLeft: () => (
+            //     <MyDrawer/>
+            // ),
+        })}
       />
     </BottomTab.Navigator>
   );
 }
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
+
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={25} style={{ marginBottom: -3 }} {...props} />;
 }
+

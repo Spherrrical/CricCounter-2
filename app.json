@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CricCounterV2",
-    "slug": "CricCounterV2",
+    "name": "criccounterv3",
+    "slug": "criccounterv3",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/c5d7a99b-4d6a-4521-bd5c-d801b067279b"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -29,6 +30,14 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c5d7a99b-4d6a-4521-bd5c-d801b067279b"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
