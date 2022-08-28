@@ -167,7 +167,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           />
           <View style={styles.buttonseperate}/>
           <Button
-              onPress={() => {Alert.alert('Error Code 0x1')}} title="Save Score" color="#008f11"
+              onPress={() => {onShare()}} title="Save Score" color="#008f11"
           />
           <View style={styles.buttonseperate}/>
           <Button onPress={resetMenuAll} title="Reset Menu" color="#ff453a"/>

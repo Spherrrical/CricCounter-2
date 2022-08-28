@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, Switch } from 'react-native';
-
+import React, {useContext, useEffect, useState} from 'react';
 import EditScreenInfo from '../components/EditScreenInfo';
 import {Text, useThemeColor, View} from '../components/Themed';
 import useColorScheme from "../hooks/useColorScheme";

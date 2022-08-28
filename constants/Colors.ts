@@ -1,6 +1,6 @@
 const tintColorLight = '#ad0000';
 const tintColorDark = '#57c4e6';
-
+import React, {useContext, useEffect, useState} from 'react';
 export default {
   light: {
     text: '#000',
