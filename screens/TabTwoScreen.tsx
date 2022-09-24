@@ -3,76 +3,50 @@ import React, { useCallback, useState } from "react";
 import EditScreenInfo from '../components/EditScreenInfo';
 import Modal from "react-native-modal";
 import { Text, View } from '../components/Themed';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Haptics from "expo-haptics";
+import {isUsingEmbeddedAssets} from "expo-updates";
+
 
 export default function TabTwoScreen() {
 
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
-
-  const supportedURL = "https://google.com";
-  const [name, setName] = useState("");
-  const unsupportedURL = "slack://open?team=123456";
-  // @ts-ignore
-  const OpenURLButton = ({ url, children }) => {
-    const handlePress = useCallback(async () => {
-      // Checking if the link is supported for links with custom URL scheme.
-      const supported = await Linking.canOpenURL(url);
-
-      if (supported) {
-        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-        // by some browser in the mobile
-        await Linking.openURL(url);
-      } else {
-        Alert.alert(`Woah!\nThis button is not yet usable. Sorry!`);
-      }
-    }, [url]);
-
-    return <Button title={children} onPress={handlePress} />;
-  };
-
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message: `CricCounter Score`,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-          console.log("1")
-        } else {
-          // shared
-          console.log("2")
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-        console.log("3")
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Player Based Scoring</Text>
-      <Text style={styles.header}>PBS allows team managers to score per player.</Text>
-      <View style={styles.info}>
-        <OpenURLButton url={unsupportedURL}>More Information</OpenURLButton>
-      </View>
-      <Button
-          onPress={() => {
-            Alert.alert(`In development. Sorry!`)}} title="Begin Setup" color="#64d3ff"
-      />
-      {/*<TextInput*/}
-      {/*    style={styles.input}*/}
-      {/*    returnKeyType="go"*/}
-      {/*    onSubmitEditing={(value) => setName(value.nativeEvent.text)}*/}
-      {/*/>*/}
+      <Text style={styles.title}>Live Scoring</Text>
+      {/*<View style={styles.separator}></View>*/}
+      <Text style={styles.header}>Continue with Apple to start setup.</Text>
+      <View style={styles.separator}></View>
+
+      <SignApple></SignApple>
     </View>
+  );
+}
+
+function SignApple() {
+  return (
+      <AppleAuthentication.AppleAuthenticationButton
+          buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
+          buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.WHITE}
+          cornerRadius={5}
+          style={{ width: 190, height: 39 }}
+          onPress={async () => {
+            try {
+              const credential = await AppleAuthentication.signInAsync({
+                requestedScopes: [
+                  AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                  AppleAuthentication.AppleAuthenticationScope.EMAIL,
+                ],
+              });
+              // signed in
+            } catch (e) {
+              if (e.code === 'ERR_CANCELED') {
+                // handle that the user canceled the sign-in flow
+              } else {
+                // handle other errors
+              }
+            }
+          }}
+      />
   );
 }
 
@@ -92,16 +66,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: 29,
     fontWeight: 'bold',
     marginBottom: 15,
   },
   header: {
-    fontSize: 15,
-    fontWeight: '400',
-    justifyContent: 'center',
-    flexWrap: "wrap",
-    marginHorizontal: 40,
+    fontSize: 18,
+    fontWeight: '600',
+    marginHorizontal: 7,
   },
   info: {
     fontSize: 10,

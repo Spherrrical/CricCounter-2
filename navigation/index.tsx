@@ -101,11 +101,11 @@ function BottomTabNavigator() {
         name="TabTwo"
         component={TabTwoScreen}
         options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
-          title: 'PBS',
-          tabBarIcon: ({ color }) => <TabBarIcon name="group" color={color} />,
+          title: 'Live Scoring',
+          tabBarIcon: ({ color }) => <TabBarIcon name="rss" color={color} />,
             headerRight: () => (
                 <Pressable
-                    onPress={() => navigation.navigate('Setup')}
+                    onPress={() => navigation.navigate('Settings')}
                     style={({ pressed }) => ({
                         opacity: pressed ? 0.5 : 1,
                     })}>

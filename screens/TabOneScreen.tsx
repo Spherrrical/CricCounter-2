@@ -6,6 +6,7 @@ import useColorScheme from "../hooks/useColorScheme";
 import Colors from '../constants/Colors';
 import { Text, View } from '../components/Themed';
 import { FontAwesome } from "@expo/vector-icons";
+import * as Haptics from 'expo-haptics';
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   const [runs, setRuns] = useState(0);
@@ -76,20 +77,26 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
               // cancel action
             } else if (buttonIndex === 1) {
               setNoBall(0)
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
             } else if (buttonIndex === 2) {
               setOvers(0)
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
             } else if (buttonIndex == 3) {
               setBalls(0)
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
             } else if (buttonIndex == 4) {
               setWide(0)
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
             } else if (buttonIndex == 5) {
               setRuns(0)
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
             } else if (buttonIndex == 6) {
               setRuns(0)
               setWide(0)
               setBalls(0)
               setOvers(0)
               setNoBall(0)
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
             }
 
           }
@@ -113,22 +120,22 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           <View style={styles.buttonseperate}/>
           <View style={styles.runsFixRow}>
             <Button
-                onPress={() => {setRuns(runs - 1),setWide(wide - 1)}}
+                onPress={() => {setRuns(runs - 1),setWide(wide - 1),Haptics.selectionAsync()}}
                 title="-1 W"
                 color="#da8fff"
             />
             <Button
-                onPress={() => {setRuns(runs + 1),setWide(wide + 1)}}
+                onPress={() => {setRuns(runs + 1),setWide(wide + 1),Haptics.selectionAsync()}}
                 title="+1 W"
                 color="#da8fff"
             />
             <Button
-                onPress={() => {setRuns(runs - 1),setNoBall(noball - 1)}}
+                onPress={() => {setRuns(runs - 1),setNoBall(noball - 1),Haptics.selectionAsync()}}
                 title="-1 NB"
                 color="#da8fff"
             />
             <Button
-                onPress={() => {setRuns(runs + 1),setNoBall(noball + 1)}}
+                onPress={() => {setRuns(runs + 1),setNoBall(noball + 1),Haptics.selectionAsync()}}
                 title="+1 NB"
                 color="#da8fff"
             />
@@ -137,20 +144,20 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           <View style={styles.buttonseperate}/>
           <View style={styles.runsFixRow2}>
             <Button
-                onPress={() => {setRuns(runs + 4),setBalls(balls + 1)}}
+                onPress={() => {setRuns(runs + 4),setBalls(balls + 1),Haptics.selectionAsync()}}
                 title="+4"
                 color="#ffd426"
             />
             <Button
-                onPress={() => {setRuns(runs - 1)}}
+                onPress={() => {setRuns(runs - 1),Haptics.selectionAsync()}}
                 title="-1"
             />
             <Button
-                onPress={() => {setRuns(runs + 1)}}
+                onPress={() => {setRuns(runs + 1),Haptics.selectionAsync()}}
                 title="+1"
             />
             <Button
-                onPress={() => {setRuns(runs + 6),setBalls(balls + 1)}}
+                onPress={() => {setRuns(runs + 6),setBalls(balls + 1),Haptics.selectionAsync()}}
                 title="+6"
                 color="#ffd426"
             />
@@ -158,7 +165,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           <View style={styles.buttonseperate}/>
           {/*<Button onPress={onPress} title="Reset Menu" color="#ff453a"/>*/}
           <Button
-              onPress={() => {setTarget(runs), setRuns(0),Alert.alert('Target set/reset. \nBe aware this also resets your runs.')}} title="Set/Reset Target" color="#64d3ff"
+              onPress={() => {setTarget(runs), Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success),setRuns(0),Alert.alert('Target set/reset. \nBe aware this also resets your runs.')}} title="Set/Reset Target" color="#64d3ff"
           />
           <View style={styles.buttonseperate}/>
           <Button
@@ -180,12 +187,12 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
           <View style={styles.ballsButtonseperate}/>
           <View style={styles.ballsFixRow}>
             <Button
-                onPress={() => {setBalls(balls - 1)}}
+                onPress={() => {setBalls(balls - 1),Haptics.selectionAsync()}}
                 title="-1 Ball"
             />
             <View style={styles.ballsSeperate}/>
             <Button
-                onPress={() => {setBalls(balls + 1)}}
+                onPress={() => {setBalls(balls + 1),Haptics.selectionAsync()}}
                 title="+1 Ball"
             />
           </View>
